@@ -14,6 +14,12 @@ public class RoleDaoImpl implements RoleDao {
     private EntityManager entityManager;
 
     @Override
+    @Transactional(readOnly = true)
+    public Role getRoleById(Long id) {
+        return entityManager.find(Role.class, id);
+    }
+
+    @Override
     @Transactional
     public void addRole(Role role) {
         entityManager.persist(role);
