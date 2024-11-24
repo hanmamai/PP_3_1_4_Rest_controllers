@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,74 +12,45 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
     @Transient
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-    private Set<User> users;
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
 
     public Role() {
     }
-
-    public Role(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return name;
     }
-
-    public Role(Long id, String name) {
-        this.id = id;
+    public Role(String name) {
         this.name = name;
     }
-
-    public Long getId() {
-        return id;
+    public Collection<User> getUsers() {
+        return users;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
-    public Set<User> getUsers() {
-        return users;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public Long getId() {
+        return id;
     }
-
     @Override
     public String getAuthority() {
-        return getName();
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) && Objects.equals(name, role.name) && Objects.equals(users, role.users);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, users);
+        return name;
     }
 }
