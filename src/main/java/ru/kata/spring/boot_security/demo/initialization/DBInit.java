@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DBInit  implements ApplicationListener<ContextRefreshedEvent> {
@@ -35,7 +36,7 @@ public class DBInit  implements ApplicationListener<ContextRefreshedEvent> {
             admin.setUsername("admin");
             admin.setPassword("admin");
             admin.setEmail("admin@mail.ru");
-            admin.setRoles(List.of(adminRole));
+            admin.setRoles(Set.of(adminRole));
             userService.saveUser(admin);
         }
         if (userService.findByUsername("user") == null) {
@@ -43,7 +44,7 @@ public class DBInit  implements ApplicationListener<ContextRefreshedEvent> {
             user.setUsername("user");
             user.setPassword("user");
             user.setEmail("user@mail.ru");
-            user.setRoles(List.of(userRole));
+            user.setRoles(Set.of(userRole));
             userService.saveUser(user);
         }
     }
